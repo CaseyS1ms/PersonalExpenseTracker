@@ -1,5 +1,5 @@
 import sqlite3
-
+import sys
 
 #DATABASE SETUP
 #=====================================================================
@@ -37,10 +37,16 @@ def update_finances(id, name, amount, category):
 
 
 
-insert_finances("John", "5000", "RENT")
+cli_input = sys.argv[1]
 
-
-update_finances("1","John", "500", "BILLS")
+if cli_input == ".rf":
+    remove_finances(sys.argv[2])
+elif cli_input == ".af":
+    insert_finances(sys.argv[2], sys.argv[3], sys.argv[4])
+elif cli_input == ".uf":
+    update_finances(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+else:
+    print("Invalid command")
 
 
 
