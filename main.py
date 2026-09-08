@@ -1,5 +1,7 @@
 import sqlite3
-import sys
+import argparse
+
+ap = argparse.ArgumentParser()
 
 #DATABASE SETUP
 #=====================================================================
@@ -37,16 +39,36 @@ def update_finances(id, name, amount, category):
 
 
 
-cli_input = sys.argv[1]
+# cli_input = sys.argv[1]
+#
+# if cli_input == ".rf":
+#     remove_finances(sys.argv[2])
+# elif cli_input == ".af":
+#     insert_finances(sys.argv[2], sys.argv[3], sys.argv[4])
+# elif cli_input == ".uf":
+#     update_finances(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+# else:
+#     print("Invalid command")
 
-if cli_input == ".rf":
-    remove_finances(sys.argv[2])
-elif cli_input == ".af":
-    insert_finances(sys.argv[2], sys.argv[3], sys.argv[4])
-elif cli_input == ".uf":
-    update_finances(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
-else:
-    print("Invalid command")
+
+ap.add_argument("-f", "--function", required = True, help = "Function Name")
+ap.add_argument("-n", "--name", required=True)
+ap.add_argument("-a", "--amount", required=False)
+ap.add_argument("-c", "--category", required=False)
+ap.add_argument("-i", "--id", required=False)
+args = vars(ap.parse_args())
+
+args = vars(ap.parse_args())
+print(args)
+
+if args["function"] == "a" :
+    insert_finances(args["name"], args["amount"], args["category"])
+
+elif args["function"] == "r" :
+    remove_finances(args["name"])
+
+elif args["function"] == "u" :
+    update_finances(args["name"], args["amount"], args["category"], args["id"])
 
 
 
