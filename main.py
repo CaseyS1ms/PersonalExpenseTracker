@@ -28,8 +28,8 @@ def insert_finances(name, amount, category, date):
     conn.commit()
 
 
-def remove_finances(name):
-    cursor.execute("DELETE FROM finances WHERE NAME = ?", (name,))
+def remove_finances(id):
+    cursor.execute("DELETE FROM finances WHERE ID = ?", (id,))
     conn.commit()
 
 def update_finances(id, name, amount, category, date):
@@ -76,7 +76,7 @@ if args["function"] == "a" :
     insert_finances(args["name"], int(args["amount"]), args["category"], args["date"])
 
 elif args["function"] == "r" :
-    remove_finances(args["name"])
+    remove_finances(args["id"])
 
 elif args["function"] == "u" :
     update_finances(args["id"], args["name"], int(args["amount"]), args["category"], args["date"])
