@@ -9,4 +9,4 @@ current functions:
 - -f u - update expense with -i [id] and whichever columns needs to be updated 
 - -f rt - reset table
 - -f s - gives a summary of the amount of all transactions
-- 
+
