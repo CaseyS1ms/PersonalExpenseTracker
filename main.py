@@ -56,7 +56,7 @@ def summary_finances():
     amount = 0
     for row in rows:
         amount = amount + row[0]
-    print("Total - £", + amount)
+    print(f"Total - £{amount}")
 
 
 
