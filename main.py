@@ -86,7 +86,7 @@ elif args["function"] == "l" :
 
 elif args["function"] == "rt" :
     reset_finances()
-    print("succesfully reset database")
+    print("succesfully reset table")
 
 elif args["function"] == "s" :
     summary_finances()
