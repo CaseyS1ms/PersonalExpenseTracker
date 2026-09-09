@@ -17,13 +17,14 @@ table_creation_query = """
         NAME TEXT NOT NULL,
         AMOUNT INTEGER NOT NULL,
         CATEGORY TEXT NOT NULL
+        DATE TEXT NOT NULL,
     );
                        """
 cursor.execute(table_creation_query)
 #===================================================================
 
-def insert_finances(name, amount, category):
-    cursor.execute("INSERT INTO finances  (NAME, AMOUNT, CATEGORY) VALUES (?,?,?)", (name, amount, category))
+def insert_finances(name, amount, category, date):
+    cursor.execute("INSERT INTO finances  (NAME, AMOUNT, CATEGORY) VALUES (?,?,?, ?)", (name, amount, category, date))
     conn.commit()
 
 
@@ -31,8 +32,8 @@ def remove_finances(name):
     cursor.execute("DELETE FROM finances WHERE NAME = ?", (name,))
     conn.commit()
 
-def update_finances(id, name, amount, category):
-    cursor.execute("UPDATE finances SET NAME = ?, AMOUNT = ?, CATEGORY = ? WHERE ID = ?", (name, amount, category, id))
+def update_finances(id, name, amount, category, date):
+    cursor.execute("UPDATE finances SET NAME = ?, AMOUNT = ?, CATEGORY = ?, DATE = ? WHERE ID = ?", (name, amount, category, date,  id))
     conn.commit()
 
 
@@ -55,23 +56,26 @@ def reset_finances():
 
 
 
+
+
 ap.add_argument("-f", "--function", required = True, help = "Function Name")
 ap.add_argument("-n", "--name", required=False)
 ap.add_argument("-a", "--amount", required=False)
 ap.add_argument("-c", "--category", required=False)
+ap .add_argument("-d", "--date", required=False)
 ap.add_argument("-i", "--id", required=False)
 args = vars(ap.parse_args())
 
 # print(args)
 
 if args["function"] == "a" :
-    insert_finances(args["name"], int(args["amount"]), args["category"])
+    insert_finances(args["name"], int(args["amount"]), args["category"], args["date"])
 
 elif args["function"] == "r" :
     remove_finances(args["name"])
 
 elif args["function"] == "u" :
-    update_finances(args["id"], args["name"], int(args["amount"]), args["category"])
+    update_finances(args["id"], args["name"], int(args["amount"]), args["category"], args["date"])
 
 elif args["function"] == "l" :
     list_finances()
