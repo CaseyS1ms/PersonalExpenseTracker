@@ -16,15 +16,15 @@ table_creation_query = """
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         NAME TEXT NOT NULL,
         AMOUNT INTEGER NOT NULL,
-        CATEGORY TEXT NOT NULL
-        DATE TEXT NOT NULL,
+        CATEGORY TEXT NOT NULL,
+        DATE TEXT NOT NULL
     );
                        """
 cursor.execute(table_creation_query)
 #===================================================================
 
 def insert_finances(name, amount, category, date):
-    cursor.execute("INSERT INTO finances  (NAME, AMOUNT, CATEGORY) VALUES (?,?,?, ?)", (name, amount, category, date))
+    cursor.execute("INSERT INTO finances  (NAME, AMOUNT, CATEGORY, DATE) VALUES (?,?,?,?)", (name, amount, category, date))
     conn.commit()
 
 
@@ -50,9 +50,13 @@ def reset_finances():
     cursor.execute(table_creation_query)
     conn.commit()
 
-
-
-
+def summary_finances():
+    cursor.execute("SELECT AMOUNT FROM finances")
+    rows = cursor.fetchall()
+    amount = 0
+    for row in rows:
+        amount = amount + row[0]
+    print("Total - £", + amount)
 
 
 
@@ -83,6 +87,9 @@ elif args["function"] == "l" :
 elif args["function"] == "rt" :
     reset_finances()
     print("succesfully reset database")
+
+elif args["function"] == "s" :
+    summary_finances()
 
 
 
