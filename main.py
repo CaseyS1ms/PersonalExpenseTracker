@@ -36,39 +36,49 @@ def update_finances(id, name, amount, category):
     conn.commit()
 
 
+def list_finances():
+    cursor.execute("SELECT * FROM finances")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
+def reset_finances():
+    cursor.execute("DROP TABLE IF EXISTS finances")
+    conn.commit()
+    cursor.execute(table_creation_query)
+    conn.commit()
 
 
 
-# cli_input = sys.argv[1]
-#
-# if cli_input == ".rf":
-#     remove_finances(sys.argv[2])
-# elif cli_input == ".af":
-#     insert_finances(sys.argv[2], sys.argv[3], sys.argv[4])
-# elif cli_input == ".uf":
-#     update_finances(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
-# else:
-#     print("Invalid command")
+
+
 
 
 ap.add_argument("-f", "--function", required = True, help = "Function Name")
-ap.add_argument("-n", "--name", required=True)
+ap.add_argument("-n", "--name", required=False)
 ap.add_argument("-a", "--amount", required=False)
 ap.add_argument("-c", "--category", required=False)
 ap.add_argument("-i", "--id", required=False)
 args = vars(ap.parse_args())
 
-args = vars(ap.parse_args())
-print(args)
+# print(args)
 
 if args["function"] == "a" :
-    insert_finances(args["name"], args["amount"], args["category"])
+    insert_finances(args["name"], int(args["amount"]), args["category"])
 
 elif args["function"] == "r" :
     remove_finances(args["name"])
 
 elif args["function"] == "u" :
-    update_finances(args["name"], args["amount"], args["category"], args["id"])
+    update_finances(args["id"], args["name"], int(args["amount"]), args["category"])
+
+elif args["function"] == "l" :
+    list_finances()
+
+elif args["function"] == "rt" :
+    reset_finances()
+    print("succesfully reset database")
 
 
 
